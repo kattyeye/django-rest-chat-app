@@ -1,12 +1,17 @@
 from rest_framework import generics
-from .models import ChatRoom, Message
-from .serializers import ChatRoomSerializer, MessageSerializer
+from .models import Room, Message
+from .serializers import RoomSerializer, MessageSerializer
 # Create your views here.
 
 
-class ChatDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ChatRoom.objects.all()
-    serializer_class = ChatRoomSerializer
+class RoomListAPIView(generics.ListCreateAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+
+
+class RoomDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
 
 
 class MessageDetailAPIView(generics.RetrieveUpdateDestroyAPIView):

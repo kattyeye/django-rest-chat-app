@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 
 
-class ChatRoom(models.Model):
+class Room(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
@@ -13,7 +13,7 @@ class ChatRoom(models.Model):
 
 class Message(models.Model):
     text = models.CharField(max_length=255)
-    chat_room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
+    chat_room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.chat_room.name

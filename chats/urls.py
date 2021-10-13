@@ -7,5 +7,6 @@ app_name = 'chats'
 
 urlpatterns = [
 
-    path('', views.ChatListAPIView.as_view(), name="chat_list"),
+    path('rooms/<int:pk>', views.RoomDetailAPIView.as_view(), name="room_list"),
+    path('rooms/', views.RoomListAPIView.as_view(), name="room_list"),
 ]

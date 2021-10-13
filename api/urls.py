@@ -4,5 +4,5 @@ from . import views
 app_name = 'api_v1'
 
 urlpatterns = [
-    path('chatlog/', include('chats.urls', namespace="chats")),
+    path('', include('chats.urls', namespace="chats")),
 ]

@@ -1,16 +1,16 @@
 from re import M
 from rest_framework import serializers
 
-from .models import ChatRoom, Message
+from .models import Room, Message
 
 
-class ChatRoomSerializer(serializers.ModelSerializer):
+class RoomSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ChatRoom
-        fields = ('id', 'name', 'message')
+        model = Room
+        fields = ('id', 'name',)
 
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ('id', 'text')
+        fields = ('id', 'text',)
