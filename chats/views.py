@@ -17,15 +17,16 @@ class RoomDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 class MessageListAPIView(generics.ListCreateAPIView):
     serializer_class = MessageSerializer
+    queryset = Message.objects.all()
 
-    def get_queryset(self):
-        message_id = self.kwargs['message']
-        return Message.objects.filter(message=message_id)
+    # def get_queryset(self):
+    #     message_id = self.kwargs['message']
+    #     return Message.objects.filter(message=message_id)
 
-    def perform_create(self, serializer):
-        message_instance = get_object_or_404(
-            Message, id=self.kwargs['message'])  # this id comes from the url
-        serializer.save(message=message_instance)
+    # def perform_create(self, serializer):
+    #     message_instance = get_object_or_404(
+    #         Room, id=self.kwargs['pk'])  # this id comes from the url
+    #     serializer.save(chat_room=message_instance)
 
 
 class MessageDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
