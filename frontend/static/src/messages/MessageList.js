@@ -14,9 +14,9 @@ export default function MessageList() {
   }, []);
 
   const messageListHTML = messageList.map((message) => (
-    <section>
+    <div>
       <p style={{ padding: "10px" }}>{message.text}</p>
-    </section>
+    </div>
   ));
 
   return <ul>{messageListHTML}</ul>;

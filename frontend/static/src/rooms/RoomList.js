@@ -11,7 +11,7 @@ export default function RoomList(props) {
           type="button"
           onClick={props.fetchMessages}
         >
-          {props.roomList.name} {/* go back and change */}
+          {room.name} {/* go back and change */}
         </button>
       </div>
     </aside>

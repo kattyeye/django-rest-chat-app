@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import RoomList from "./rooms/RoomList";
 import Room from "./rooms/Room";
 import MessageList from "./messages/MessageList";
+import MessageForm from "./messages/MessageForm";
 
 function App() {
   const [roomList, setRoomList] = useState([]);
@@ -33,6 +34,7 @@ function App() {
       <RoomList roomList={roomList} selectRoom={selectRoom} />
       <Room roomList={roomList} />
       {selection && <MessageList />}
+      {selection && <MessageForm />}
     </div>
   );
 }
