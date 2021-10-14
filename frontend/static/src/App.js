@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import RoomList from "./rooms/RoomList";
-import Room from "./rooms/Room";
+import RoomForm from "./rooms/RoomForm";
 import MessageList from "./messages/MessageList";
 import MessageForm from "./messages/MessageForm";
 
@@ -16,7 +16,7 @@ function App() {
       console.log("data", data);
       setRoomList(data);
     }
-    fetchRooms();
+    setInterval(fetchRooms(), 3000);
   }, []);
 
   let messages;
@@ -32,7 +32,7 @@ function App() {
     <div className="App">
       {" "}
       <RoomList roomList={roomList} selectRoom={selectRoom} />
-      <Room roomList={roomList} />
+      <RoomForm roomList={roomList} />
       {selection && <MessageList />}
       {selection && <MessageForm />}
     </div>

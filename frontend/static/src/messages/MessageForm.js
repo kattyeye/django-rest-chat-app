@@ -7,7 +7,7 @@ export default function MessageForm(props) {
 
   function addMessage(text) {
     const newMessage = { text };
-    const response = fetch(`/api_v1/rooms/3/messages/`, {
+    const response = fetch(`/api_v1/rooms/1/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,7 +17,7 @@ export default function MessageForm(props) {
     if (response.ok) {
       localStorage.props.setNewMessage(
         "message",
-        JSON.stringify({ ...newMessage })
+        JSON.stringify({ newMessage })
       );
     }
   }
@@ -38,7 +38,7 @@ export default function MessageForm(props) {
           onChange={handleChange}
           type="text"
           placeholder="write a message"
-          value={newMessage.text}
+          value={newMessage}
         />
         <button type="submit">Send</button>
       </form>
