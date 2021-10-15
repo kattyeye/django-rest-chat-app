@@ -5,14 +5,14 @@ export default function MessageForm(props) {
     text: "",
   });
 
-  function addMessage(text) {
+  function addMessage(text, event) {
     const newMessage = { text };
-    const response = fetch(`/api_v1/messages/`, {
+    const response = fetch(`/api_v1/rooms/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newMessage),
+      body: JSON.stringify(newMessage.text),
     });
     if (response.ok) {
       setNewMessage("text", JSON.stringify({ newMessage }));
@@ -24,7 +24,7 @@ export default function MessageForm(props) {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    addMessage(newMessage);
+    addMessage(newMessage.text);
   }
 
   return (

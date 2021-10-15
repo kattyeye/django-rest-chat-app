@@ -4,6 +4,8 @@ import RoomList from "./rooms/RoomList";
 import RoomForm from "./rooms/RoomForm";
 import MessageList from "./messages/MessageList";
 import MessageForm from "./messages/MessageForm";
+import RegistrationForm from "./registration/RegistrationForm";
+import Cookies from "js-cookie";
 
 function App() {
   const [roomList, setRoomList] = useState([]);
@@ -37,6 +39,30 @@ function App() {
     setSelection(text);
   }
 
+  const handleError = (err) => {
+    console.warn(err);
+  };
+  const handleRegistration = async (user) => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": Cookies.get("csrftoken"),
+      },
+      body: JSON.stringify(user),
+    };
+
+    const response = await fetch("/rest-auth/registration/", options).catch(
+      handleError
+    );
+    if (!response === true) {
+      console.warn(response);
+    } else {
+      const data = await response.json();
+      Cookies.set("Authorization", `Token ${data.key}`);
+    }
+  };
+
   return (
     <div className="chatApp">
       {" "}
@@ -45,9 +71,13 @@ function App() {
         selectRoom={selectRoom}
         fetchMessagesForThatRoom={fetchMessagesForThatRoom}
       />
-      <RoomForm roomList={roomList} />
+      <RoomForm
+        roomList={roomList}
+        fetchMessagesForThatRoom={fetchMessagesForThatRoom}
+      />
       {selection && <MessageList messageList={messageList} />}
       {selection && <MessageForm messageList={messageList} />}
+      <RegistrationForm handleRegistration={handleRegistration} />
     </div>
   );
 }
