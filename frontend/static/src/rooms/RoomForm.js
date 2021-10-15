@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Room(props) {
   const [newRoom, setNewRoom] = useState({
@@ -15,21 +15,23 @@ export default function Room(props) {
       body: JSON.stringify(newRoom),
     });
     if (response.ok) {
-      localStorage.setRoomList("room", JSON.stringify({ ...props.roomList }));
+      props.setRoomList("room", JSON.stringify({ ...props.roomList }));
     }
   }
 
   function handleChange(e) {
     setNewRoom(e.target.value);
   }
+
   function handleSubmit(e) {
     e.preventDefault();
     addRoom(newRoom);
+    setNewRoom("");
   }
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="new-room-form">
         <label htmlFor="new-room">New Room</label>
         <input
           type="text"

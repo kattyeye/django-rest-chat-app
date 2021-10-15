@@ -8,6 +8,7 @@ import MessageForm from "./messages/MessageForm";
 function App() {
   const [roomList, setRoomList] = useState([]);
   const [selection, setSelection] = useState([]);
+  const [messageList, setMessageList] = useState([]);
 
   useEffect(() => {
     async function fetchRooms() {
@@ -16,8 +17,16 @@ function App() {
       console.log("data", data);
       setRoomList(data);
     }
-    setInterval(fetchRooms(), 3000);
+    fetchRooms();
   }, []);
+
+  async function fetchMessagesForThatRoom(event) {
+    // console.log("event firing");
+    const response = await fetch(`/api_v1/rooms/${event.target.value}/`);
+    const data = await response.json();
+    console.log("data", data);
+    setMessageList(data.messages);
+  }
 
   let messages;
   if (selection) {
@@ -29,12 +38,16 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="chatApp">
       {" "}
-      <RoomList roomList={roomList} selectRoom={selectRoom} />
+      <RoomList
+        roomList={roomList}
+        selectRoom={selectRoom}
+        fetchMessagesForThatRoom={fetchMessagesForThatRoom}
+      />
       <RoomForm roomList={roomList} />
-      {selection && <MessageList />}
-      {selection && <MessageForm />}
+      {selection && <MessageList messageList={messageList} />}
+      {selection && <MessageForm messageList={messageList} />}
     </div>
   );
 }

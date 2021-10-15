@@ -13,7 +13,8 @@ class Room(models.Model):
 
 class Message(models.Model):
     text = models.CharField(max_length=255)
-    chat_room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    chat_room = models.ForeignKey(
+        Room, related_name="messages", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.chat_room.name

@@ -1,21 +1,29 @@
-import { useState, useEffect } from "react";
-
 export default function RoomList(props) {
-  // const [roomList, setRoomList] = useState([]);
+  // const [messageList, setMessageList] = useState([]);
 
   const roomListTitlesHTML = props.roomList.map((room) => (
-    <aside>
-      <div class="btn-group-vertical" style={{ padding: "10px" }}>
-        <button
-          class="btn btn-info btn-large"
-          type="button"
-          onClick={props.fetchMessages}
-        >
-          {room.name} {/* go back and change */}
-        </button>
-      </div>
-    </aside>
+    <li class="btn-group-vertical" style={{ padding: "10px" }}>
+      <button
+        value={room.id}
+        class="btn btn-info btn-large"
+        type="button"
+        onClick={props.fetchMessagesForThatRoom}
+      >
+        {room.name}
+      </button>
+    </li>
   ));
 
-  return <ul>{roomListTitlesHTML}</ul>;
+  return (
+    <aside
+      style={{
+        width: "25%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+      }}
+    >
+      <ul>{roomListTitlesHTML}</ul>
+    </aside>
+  );
 }

@@ -20,7 +20,7 @@ class MessageListAPIView(generics.ListCreateAPIView):
     queryset = Message.objects.all()
 
     # def get_queryset(self):
-    #     message_id = self.kwargs['message']
+    #     message_id = self.kwargs['pk']
     #     return Message.objects.filter(message=message_id)
 
     # def perform_create(self, serializer):
