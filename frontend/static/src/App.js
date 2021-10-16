@@ -23,7 +23,6 @@ function App() {
   }, []);
 
   async function fetchMessagesForThatRoom(event) {
-    // console.log("event firing");
     const response = await fetch(`/api_v1/rooms/${event.target.value}/`);
     const data = await response.json();
     console.log("data", data);
@@ -77,7 +76,10 @@ function App() {
       />
       {selection && <MessageList messageList={messageList} />}
       {selection && <MessageForm messageList={messageList} />}
-      <RegistrationForm handleRegistration={handleRegistration} />
+      <RegistrationForm
+        handleRegistration={handleRegistration}
+        handleError={handleError}
+      />
     </div>
   );
 }
