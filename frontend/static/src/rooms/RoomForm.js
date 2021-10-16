@@ -14,8 +14,9 @@ export default function Room(props) {
       },
       body: JSON.stringify(newRoom),
     });
+    props.setRoomList([...props.roomList, newRoom]);
+
     if (response.ok) {
-      props.setRoomList("room", JSON.stringify({ ...props.roomList }));
     }
   }
 
@@ -26,7 +27,7 @@ export default function Room(props) {
   function handleSubmit(e) {
     e.preventDefault();
     addRoom(newRoom);
-    setNewRoom("");
+    console.log({ newRoom });
   }
 
   return (

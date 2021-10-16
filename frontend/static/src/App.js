@@ -6,6 +6,7 @@ import MessageList from "./messages/MessageList";
 import MessageForm from "./messages/MessageForm";
 import RegistrationForm from "./registration/RegistrationForm";
 import Cookies from "js-cookie";
+import Login from "./login/Login.js";
 
 function App() {
   const [roomList, setRoomList] = useState([]);
@@ -29,14 +30,14 @@ function App() {
     setMessageList(data.messages);
   }
 
-  let messages;
-  if (selection) {
-    messages = roomList.find((message) => message === selection);
-  }
+  // let messages;
+  // if (selection == "") {
+  //   messages = roomList.find((message) => message === selection);
+  // }
 
-  function selectRoom(text) {
-    setSelection(text);
-  }
+  // function selectRoom(text) {
+  //   setSelection(text);
+  // }
 
   const handleError = (err) => {
     console.warn(err);
@@ -61,25 +62,46 @@ function App() {
       Cookies.set("Authorization", `Token ${data.key}`);
     }
   };
+  // const handleLogin = async (user) => {
+  //   const options = {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "X-CSRFToken": Cookies.set("csrftoken"),
+  //     },
+  //     body: JSON.stringify(user),
+  //   };
+
+  //   const response = await fetch("/rest-auth/registration/", options).catch(
+  //     handleError
+  //   );
+  //   if (!response === true) {
+  //     console.warn(response);
+  //   } else {
+  //     const data = await response.json();
+  //     Cookies.set("Authorization", `Token ${data.key}`);
+  //   }
+  // };
 
   return (
     <div className="chatApp">
       {" "}
       <RoomList
         roomList={roomList}
-        selectRoom={selectRoom}
         fetchMessagesForThatRoom={fetchMessagesForThatRoom}
       />
       <RoomForm
         roomList={roomList}
+        setRoomList={setRoomList}
         fetchMessagesForThatRoom={fetchMessagesForThatRoom}
       />
-      {selection && <MessageList messageList={messageList} />}
-      {selection && <MessageForm messageList={messageList} />}
+      <MessageList messageList={messageList} />
+      <MessageForm messageList={messageList} setMessageList={setMessageList} />
       <RegistrationForm
         handleRegistration={handleRegistration}
         handleError={handleError}
       />
+      {/* <Login handleLogin={handleLogin} handleError={handleError} /> */}
     </div>
   );
 }

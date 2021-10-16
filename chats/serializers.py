@@ -5,6 +5,7 @@ from .models import Room, Message
 
 
 class MessageSerializer(serializers.ModelSerializer):
+    user = serializers.CharField()
 
     class Meta:
         model = Message

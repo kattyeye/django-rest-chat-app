@@ -12,10 +12,11 @@ export default function MessageForm(props) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newMessage.text),
+      body: JSON.stringify(newMessage),
     });
+    props.setMessageList([...props.messageList, newMessage]);
+
     if (response.ok) {
-      setNewMessage("text", JSON.stringify({ newMessage }));
     }
   }
 
@@ -24,7 +25,7 @@ export default function MessageForm(props) {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    addMessage(newMessage.text);
+    addMessage(newMessage);
   }
 
   return (
