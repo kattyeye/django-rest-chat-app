@@ -5,9 +5,22 @@ export default function Room(props) {
     name: "",
   });
 
-  function addRoom(name) {
+  async function addRoom(name) {
+    // const response = await fetch(`/api_v1/rooms/`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(newRoom),
+    // });
+    // props.setRoomList([...props.roomList, newRoom]);
+    // // console.log({ response });
+    // if (response.ok) {
+    //   setNewRoom(name);
+    //   props.setCurrentRoom(newRoom);
+    // }
     const newRoom = { name };
-    const response = fetch(`/api_v1/rooms/`, {
+    const response = await fetch(`/api_v1/rooms/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,20 +40,21 @@ export default function Room(props) {
   function handleSubmit(e) {
     e.preventDefault();
     addRoom(newRoom);
-    console.log({ newRoom });
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit} className="new-room-form">
-        <label htmlFor="new-room">New Room</label>
+        <label htmlFor="new-room"></label>
         <input
           type="text"
           name="name-for-newroom"
-          placeholder="Name for new room here."
+          placeholder="New Room"
           onChange={handleChange}
         />
-        <button type="submit">Add Room</button>
+        <button className="room-add-button" type="submit">
+          +
+        </button>
       </form>
     </div>
   );

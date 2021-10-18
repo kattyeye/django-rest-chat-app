@@ -1,15 +1,19 @@
 export default function RoomList(props) {
   // const [messageList, setMessageList] = useState([]);
 
-  const roomListTitlesHTML = props.roomList.map((room) => (
-    <li class="btn-group-vertical" style={{ padding: "10px" }}>
+  const roomListTitlesHTML = props.roomList.map((room, i) => (
+    <li
+      key={room.id}
+      className="btn-group-vertical"
+      style={{ padding: "10px" }}
+    >
       <button
         value={room.id}
-        class="btn btn-info btn-large"
+        className="room-list-buttons"
         type="button"
         onClick={props.fetchMessagesForThatRoom}
       >
-        {room.name}
+        # {room.name}
       </button>
     </li>
   ));

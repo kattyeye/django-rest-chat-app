@@ -12,12 +12,27 @@ function App() {
   const [roomList, setRoomList] = useState([]);
   const [selection, setSelection] = useState([]);
   const [messageList, setMessageList] = useState([]);
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password1: "",
+    password2: "",
+  });
+  const [currentRoom, setCurrentRoom] = useState({
+    name: "",
+    id: null,
+  });
 
   useEffect(() => {
+    // async function getUser() {
+    //   if (Cookies.get("csrftoken")) {
+    //     let currentUser = setUser();
+    //   }
+    // }
     async function fetchRooms() {
       const response = await fetch(`/api_v1/rooms/`);
       const data = await response.json();
-      console.log("data", data);
+      console.log("rooms", data);
       setRoomList(data);
     }
     fetchRooms();
@@ -26,7 +41,8 @@ function App() {
   async function fetchMessagesForThatRoom(event) {
     const response = await fetch(`/api_v1/rooms/${event.target.value}/`);
     const data = await response.json();
-    console.log("data", data);
+    console.log("currentRoom", data);
+    setCurrentRoom(data);
     setMessageList(data.messages);
   }
 
@@ -85,22 +101,42 @@ function App() {
 
   return (
     <div className="chatApp">
-      {" "}
-      <RoomList
-        roomList={roomList}
-        fetchMessagesForThatRoom={fetchMessagesForThatRoom}
-      />
-      <RoomForm
-        roomList={roomList}
-        setRoomList={setRoomList}
-        fetchMessagesForThatRoom={fetchMessagesForThatRoom}
-      />
-      <MessageList messageList={messageList} />
-      <MessageForm messageList={messageList} setMessageList={setMessageList} />
-      <RegistrationForm
-        handleRegistration={handleRegistration}
-        handleError={handleError}
-      />
+      <nav className="nav-bar">
+        <button>Logout</button>
+      </nav>
+      {user ? (
+        <div className="app-container">
+          <section className="room-list-container">
+            Rooms
+            <RoomList
+              roomList={roomList}
+              fetchMessagesForThatRoom={fetchMessagesForThatRoom}
+            />
+            <RoomForm
+              roomList={roomList}
+              setRoomList={setRoomList}
+              fetchMessagesForThatRoom={fetchMessagesForThatRoom}
+              setCurrentRoom={setCurrentRoom}
+            />
+          </section>
+          <section className="message-list-container">
+            <MessageList messageList={messageList} roomList={roomList} />
+            <MessageForm
+              currentRoom={currentRoom}
+              messageList={messageList}
+              setMessageList={setMessageList}
+              roomList={roomList}
+            />
+          </section>
+        </div>
+      ) : (
+        <RegistrationForm
+          user={user}
+          setUser={setUser}
+          handleRegistration={handleRegistration}
+          handleError={handleError}
+        />
+      )}
       {/* <Login handleLogin={handleLogin} handleError={handleError} /> */}
     </div>
   );

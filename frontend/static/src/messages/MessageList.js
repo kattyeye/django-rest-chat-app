@@ -1,11 +1,14 @@
 export default function MessageList(props) {
-  const messageListHTML = props.messageList.map((message) => (
-    <div>
-      <p style={{ padding: "10px" }}>
-        {message.user}: {message.text}
-      </p>
-    </div>
-  ));
-
-  return <ul>{messageListHTML}</ul>;
+  return (
+    <ul>
+      {/* {props.room.name} */}
+      {props.messageList.map((message) => (
+        <li key={message.id}>
+          <p style={{ padding: "10px" }}>
+            {message.user}: {message.text}
+          </p>
+        </li>
+      ))}
+    </ul>
+  );
 }

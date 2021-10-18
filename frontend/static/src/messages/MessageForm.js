@@ -1,19 +1,22 @@
 import { useState, useEffect } from "react";
+import Room from "../rooms/RoomForm";
 
 export default function MessageForm(props) {
   const [newMessage, setNewMessage] = useState({
     text: "",
   });
 
-  function addMessage(text, event) {
-    const newMessage = { text };
-    const response = fetch(`/api_v1/rooms/`, {
+  async function addMessage(text) {
+    console.log({ text });
+    const newMessage = { text, room: props.currentRoom };
+    const response = await fetch(`/api_v1/messages/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newMessage),
     });
+    console.log({ response });
     props.setMessageList([...props.messageList, newMessage]);
 
     if (response.ok) {
@@ -25,19 +28,21 @@ export default function MessageForm(props) {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    addMessage(newMessage);
+    addMessage(newMessage, props.roomList);
   }
 
   return (
-    <div>
-      <label htmlFor="sendingmessages">MessageForm</label>
+    <div className="message-form-container">
+      <label htmlFor="sendingmessages"></label>
       <form onSubmit={handleSubmit}>
         <input
           onChange={handleChange}
           type="text"
-          placeholder="write a message"
+          placeholder="Write a message"
         />
-        <button type="submit">Send</button>
+        <button className="send-button" type="submit">
+          Send
+        </button>
       </form>
     </div>
   );

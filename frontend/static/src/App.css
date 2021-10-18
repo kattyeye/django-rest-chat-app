@@ -1,16 +1,93 @@
 * {
   box-sizing: border-box;
 }
-
+body {
+  margin: 0 auto;
+}
+.nav-bar {
+  background-color: #212a40;
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+}
+.nav-bar button {
+  color: coral;
+  background: none;
+  border: none;
+}
+.nav-bar button:hover {
+  background-color: coral;
+  color: #212a40;
+}
 ul {
   padding: 0px;
+  list-style: none;
+}
+input {
+  border: lightgray 1px solid;
+  border-radius: 5px;
+  padding: 5px;
 }
 div p {
   justify-content: center;
-  color: red;
+  color: black;
+  border: solid lightgray 1px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
+
+.app-container {
+  display: flex;
+  padding: 30px;
+}
+
+.room-list-container {
+  width: 25%;
+  display: inline;
+  background-color: lightgray;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+}
+.message-list-container {
+  width: 75%;
+  display: inline-block;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 10px;
+  justify-content: center;
+  color: black;
+  border: 1px solid lightgray;
+  border-radius: 5px;
 }
 .new-room-form {
-  width: 25%;
+  display: inline;
+}
+.room-list-buttons {
+  background: none;
+  color: black;
+  border: none;
+  font-family: "roboto";
+  text-transform: lowercase;
+
+  border-radius: 5px;
+  padding: 5px 15px;
+  text-align: start;
+}
+.message-form-container {
   display: flex;
-  align-items: flex-start;
+  justify-content: flex-end;
+}
+.send-button,
+.room-add-button {
+  background-color: coral;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-left: 5px;
+}
+.send-button:hover,
+.room-add-button:hover {
+  background-color: rgb(255, 162, 128);
 }

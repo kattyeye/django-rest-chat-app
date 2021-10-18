@@ -1,29 +1,23 @@
 import { useState } from "react";
 
 export default function RegistrationForm(props) {
-  const [user, setUser] = useState({
-    username: "",
-    email: "",
-    password1: "",
-    password2: "",
-  });
-
   const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser((prevState) => ({
+    props.setUser((prevState) => ({
       ...prevState,
+
       [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (user.password1 !== user.password2) {
+    if (props.user.password1 !== props.user.password2) {
       setError("Passwords do not match!");
     } else {
-      props.handleRegistration(user);
+      props.handleRegistration(props.user);
     }
   };
 
@@ -39,7 +33,7 @@ export default function RegistrationForm(props) {
           required
           name="username"
           onChange={handleChange}
-          value={user.username}
+          value={props.user.username}
         />
       </div>
       <div className="form-group text-left mb-3">
@@ -52,7 +46,7 @@ export default function RegistrationForm(props) {
           required
           name="email"
           onChange={handleChange}
-          value={user.email}
+          value={props.user.email}
         />
       </div>
       <div className="form-group text-left mb-3">
@@ -65,7 +59,7 @@ export default function RegistrationForm(props) {
           required
           name="password1"
           onChange={handleChange}
-          value={user.password1}
+          value={props.user.password1}
         />
       </div>
       <div className="form-group text-left mb-3">
@@ -78,7 +72,7 @@ export default function RegistrationForm(props) {
           required
           name="password2"
           onChange={handleChange}
-          value={user.password2}
+          value={props.user.password2}
         />
         <span className="text-danger">{error}</span>
       </div>
