@@ -10,7 +10,7 @@ import Login from "./login/Login.js";
 
 function App() {
   const [roomList, setRoomList] = useState([]);
-  const [selection, setSelection] = useState([]);
+  // const [selection, setSelection] = useState([]);
   const [messageList, setMessageList] = useState([]);
   const [user, setUser] = useState({
     username: "",
@@ -78,31 +78,38 @@ function App() {
       Cookies.set("Authorization", `Token ${data.key}`);
     }
   };
-  // const handleLogin = async (user) => {
-  //   const options = {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "X-CSRFToken": Cookies.set("csrftoken"),
-  //     },
-  //     body: JSON.stringify(user),
-  //   };
 
-  //   const response = await fetch("/rest-auth/registration/", options).catch(
-  //     handleError
-  //   );
-  //   if (!response === true) {
-  //     console.warn(response);
-  //   } else {
-  //     const data = await response.json();
-  //     Cookies.set("Authorization", `Token ${data.key}`);
-  //   }
-  // };
+  const handleLogin = async (userr) => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": Cookies.get("csrftoken"),
+      },
+      body: JSON.stringify(userr),
+    };
+
+    const response = await fetch("/rest-auth/login/", options).catch(
+      handleError
+    );
+    if (!response === true) {
+      console.warn(response);
+    } else {
+      const data = await response.json();
+      Cookies.set("Authorization", `Token ${data.key}`);
+    }
+  };
 
   return (
     <div className="chatApp">
       <nav className="nav-bar">
-        <button>Logout</button>
+        <button
+          onClick={() => {
+            Cookies.remove();
+          }}
+        >
+          Logout
+        </button>
       </nav>
       {user ? (
         <div className="app-container">
@@ -137,7 +144,7 @@ function App() {
           handleError={handleError}
         />
       )}
-      {/* <Login handleLogin={handleLogin} handleError={handleError} /> */}
+      <Login handleLogin={handleLogin} handleError={handleError} />
     </div>
   );
 }

@@ -8,7 +8,7 @@ export default function MessageForm(props) {
 
   async function addMessage(text) {
     console.log({ text });
-    const newMessage = { text, room: props.currentRoom };
+    const newMessage = { text, chat_room: props.currentRoom.id };
     const response = await fetch(`/api_v1/messages/`, {
       method: "POST",
       headers: {

@@ -70,10 +70,12 @@ div p {
   border: none;
   font-family: "roboto";
   text-transform: lowercase;
-
   border-radius: 5px;
   padding: 5px 15px;
   text-align: start;
+}
+.room-list-buttons:hover {
+  color: coral;
 }
 .message-form-container {
   display: flex;
