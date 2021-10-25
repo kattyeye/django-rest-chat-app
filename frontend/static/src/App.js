@@ -7,6 +7,8 @@ import MessageForm from "./messages/MessageForm";
 import RegistrationForm from "./registration/RegistrationForm";
 import Cookies from "js-cookie";
 import Login from "./login/Login.js";
+import { useHistory, Switch, Route, withRouter } from "react-router-dom";
+import Header from "./header/Header";
 
 function App() {
   const [roomList, setRoomList] = useState([]);
@@ -22,6 +24,21 @@ function App() {
     name: "",
     id: null,
   });
+  const [isAuth, setIsAuth] = useState(null);
+  const history = useHistory;
+  useEffect(() => {
+    const checkAuth = async () => {
+      const response = await fetch("/rest-auth/user");
+      if (!response.ok) {
+        setIsAuth(false);
+        // history.push("/login");
+      } else {
+        setIsAuth(true);
+        // history.push("/account");
+      }
+    };
+    checkAuth();
+  }, [history]);
 
   useEffect(() => {
     // async function getUser() {
@@ -99,52 +116,109 @@ function App() {
       Cookies.set("Authorization", `Token ${data.key}`);
     }
   };
+  async function handleLogoutSubmit(event) {
+    // event.preventDefault();
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": Cookies.get("csrftoken"),
+      },
+      body: JSON.stringify(user),
+    };
+    const response = await fetch("/rest-auth/logout/", options);
+    if (!response) {
+      console.log(response);
+    } else {
+      console.log(response);
+      const data = await response.json();
+      Cookies.remove("Authorization");
+      setIsAuth(false);
+      // history.push("/login");
+    }
+  }
 
   return (
     <div className="chatApp">
       <nav className="nav-bar">
-        <button
-          onClick={() => {
-            Cookies.remove();
-          }}
-        >
-          Logout
-        </button>
+        <button onClick={handleLogoutSubmit}>Logout</button>
       </nav>
-      {user ? (
-        <div className="app-container">
-          <section className="room-list-container">
-            Rooms
-            <RoomList
-              roomList={roomList}
-              fetchMessagesForThatRoom={fetchMessagesForThatRoom}
-            />
-            <RoomForm
-              roomList={roomList}
-              setRoomList={setRoomList}
-              fetchMessagesForThatRoom={fetchMessagesForThatRoom}
-              setCurrentRoom={setCurrentRoom}
-            />
-          </section>
-          <section className="message-list-container">
-            <MessageList messageList={messageList} roomList={roomList} />
-            <MessageForm
-              currentRoom={currentRoom}
-              messageList={messageList}
-              setMessageList={setMessageList}
-              roomList={roomList}
-            />
-          </section>
-        </div>
-      ) : (
-        <RegistrationForm
-          user={user}
-          setUser={setUser}
-          handleRegistration={handleRegistration}
-          handleError={handleError}
-        />
-      )}
-      <Login handleLogin={handleLogin} handleError={handleError} />
+      <Header />
+
+      <Switch>
+        <Route path="/register">
+          <RegistrationForm
+            user={user}
+            setUser={setUser}
+            handleRegistration={handleRegistration}
+            handleError={handleError}
+          />
+        </Route>
+        <Route path="/login">
+          <Login handleLogin={handleLogin} />
+        </Route>
+        <Route path="/chat">
+          <div className="app-container">
+            <section className="room-list-container">
+              Rooms
+              <RoomList
+                roomList={roomList}
+                fetchMessagesForThatRoom={fetchMessagesForThatRoom}
+              />
+              <RoomForm
+                roomList={roomList}
+                setRoomList={setRoomList}
+                fetchMessagesForThatRoom={fetchMessagesForThatRoom}
+                setCurrentRoom={setCurrentRoom}
+              />
+            </section>
+            <section className="message-list-container">
+              <MessageList messageList={messageList} roomList={roomList} />
+
+              <MessageForm
+                currentRoom={currentRoom}
+                messageList={messageList}
+                setMessageList={setMessageList}
+                roomList={roomList}
+              />
+            </section>
+          </div>
+        </Route>
+        <Route></Route>
+      </Switch>
+      {/* <div className="app-container">
+        <section className="room-list-container">
+          Rooms
+          <RoomList
+            roomList={roomList}
+            fetchMessagesForThatRoom={fetchMessagesForThatRoom}
+          />
+          <RoomForm
+            roomList={roomList}
+            setRoomList={setRoomList}
+            fetchMessagesForThatRoom={fetchMessagesForThatRoom}
+            setCurrentRoom={setCurrentRoom}
+          />
+        </section>
+        <section className="message-list-container">
+          <MessageList messageList={messageList} roomList={roomList} />
+          <MessageForm
+            currentRoom={currentRoom}
+            messageList={messageList}
+            setMessageList={setMessageList}
+            roomList={roomList}
+          />
+        </section>
+      </div>
+
+      <RegistrationForm
+        user={user}
+        setUser={setUser}
+        handleRegistration={handleRegistration}
+        handleError={handleError}
+      />
+
+      <Login handleLogin={handleLogin} handleError={handleError} /> */}
     </div>
   );
 }

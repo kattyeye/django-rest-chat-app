@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export default function RegistrationForm(props) {
   const [error, setError] = useState(null);
-
+  //   const history = useHistory;
   const handleChange = (e) => {
     const { name, value } = e.target;
     props.setUser((prevState) => ({
@@ -18,6 +19,7 @@ export default function RegistrationForm(props) {
       setError("Passwords do not match!");
     } else {
       props.handleRegistration(props.user);
+      props.history.push("/chat");
     }
   };
 
