@@ -19,7 +19,7 @@ export default function RegistrationForm(props) {
       setError("Passwords do not match!");
     } else {
       props.handleRegistration(props.user);
-      props.history.push("/chat");
+      //   props.history.push("/chat");
     }
   };
 

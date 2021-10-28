@@ -15,6 +15,7 @@ export default function Login(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.handleLogin(userr);
+    props.history.push("/chat");
   };
   return (
     <form className="mt-3" onSubmit={handleSubmit}>

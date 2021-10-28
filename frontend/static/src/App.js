@@ -7,7 +7,7 @@ import MessageForm from "./messages/MessageForm";
 import RegistrationForm from "./registration/RegistrationForm";
 import Cookies from "js-cookie";
 import Login from "./login/Login.js";
-import { useHistory, Switch, Route, withRouter } from "react-router-dom";
+import { useHistory, Switch, Route, Redirect } from "react-router-dom";
 import Header from "./header/Header";
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
     id: null,
   });
   const [isAuth, setIsAuth] = useState(null);
-  const history = useHistory;
+  const history = useHistory();
   useEffect(() => {
     const checkAuth = async () => {
       const response = await fetch("/rest-auth/user");
@@ -134,7 +134,7 @@ function App() {
       const data = await response.json();
       Cookies.remove("Authorization");
       setIsAuth(false);
-      // history.push("/login");
+      history.push("/login");
     }
   }
 
@@ -146,6 +146,9 @@ function App() {
       <Header />
 
       <Switch>
+        <Route exact path="/">
+          <Redirect to="/register" />
+        </Route>
         <Route path="/register">
           <RegistrationForm
             user={user}
@@ -155,7 +158,7 @@ function App() {
           />
         </Route>
         <Route path="/login">
-          <Login handleLogin={handleLogin} />
+          <Login handleLogin={handleLogin} history={history} />
         </Route>
         <Route path="/chat">
           <div className="app-container">
@@ -170,6 +173,7 @@ function App() {
                 setRoomList={setRoomList}
                 fetchMessagesForThatRoom={fetchMessagesForThatRoom}
                 setCurrentRoom={setCurrentRoom}
+                isAuth={isAuth}
               />
             </section>
             <section className="message-list-container">

@@ -24,43 +24,11 @@ export default function MessageForm(props) {
     if (response.ok) {
     }
   }
-  //   async function handleEdit(e) {
-  //     const options = {
-  //       method: "PUT",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "X-CSRFToken": Cookies.get("csrftoken"),
-  //       },
-
-  //       body: JSON.stringify(newMessage),
-  //     };
-  //     const response = await fetch(
-  //       `/api_v1/messages/${e.target.value}/`,
-  //       options
-  //     );
-  //     if (!response) {
-  //       console.log(response);
-  //     } else {
-  //       const data = await response.json();
-  //       //   setNewMessage(data);
-  //     }
-  //   }
-  function handleDelete(event) {
-    const id = event.target.dataset.id;
-
-    fetch(`api_v1/messages/${id}`, {
-      method: "DELETE",
-    }).then((response) => {
-      if (!response.ok) {
-        throw new Error("Oops, something went wrong!", response.status);
-      }
-      event.target.parentNode.remove();
-    });
-  }
 
   function handleChange(e) {
     setNewMessage(e.target.value);
   }
+
   function handleSubmit(e) {
     e.preventDefault();
     addMessage(newMessage, props.roomList);

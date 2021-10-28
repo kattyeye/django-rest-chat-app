@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import Cookies from "js-cookie";
 export default function Room(props) {
   const [newRoom, setNewRoom] = useState({
     name: "",
@@ -24,6 +24,7 @@ export default function Room(props) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-CSRFToken": Cookies.get("csrftoken"),
       },
       body: JSON.stringify(newRoom),
     });
