@@ -4,13 +4,11 @@ import Room from "../rooms/RoomForm";
 import MessageItem from "./MessageItem";
 
 export default function MessageList(props) {
-  const [isEditing, setIsEditing] = useState(null);
-  const [editedMessage, setEditedMessage] = useState("");
+  const [editedMessage, setEditedMessage] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
-  function deleteMessage(event) {
-    const id = event.target.value;
-
-    fetch(`api_v1/messages/${id}`, {
+  async function deleteMessage(event) {
+    fetch(`api_v1/messages/${event.target.value}/`, {
       method: "DELETE",
       headers: {
         "X-CSRFToken": Cookies.get("csrftoken"),
@@ -22,11 +20,13 @@ export default function MessageList(props) {
       event.target.parentNode.remove();
     });
   }
-  async function editMessage(id, newText) {
-    const index = props.messageList.findIndex((message) => message.id === id);
-    const updatedMessages = [...props.messageList];
-    updatedMessages[index] = newText;
-    setEditedMessage(updatedMessages);
+
+  async function editMessage(event) {
+    event.preventDefault();
+    const updatedMessage = {
+      text: editedMessage,
+      chat_room: props.room,
+    };
 
     const options = {
       method: "PUT",
@@ -35,42 +35,62 @@ export default function MessageList(props) {
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
 
-      body: JSON.stringify(updatedMessages[index]),
+      body: JSON.stringify(updatedMessage),
     };
-    const response = await fetch(`/api_v1/messages/${id}/`, options);
+    const response = await fetch(`/api_v1/messages/${isEditing}/`, options);
     if (!response) {
       console.log(response);
     } else {
       const data = await response.json();
-      //   setNewMessage(data);
+      setIsEditing(false);
+      //   props.setNewMessage(data);
     }
   }
+  function handleChange(event) {
+    setEditedMessage(event.target.value);
+  }
+
   return (
     <>
       {/* <h3>{props.roomList.room}</h3> */}
       <ul>
+        {isEditing && (
+          <form onSubmit={editMessage}>
+            <input
+              type="text"
+              name="newText"
+              value={props.id}
+              onChange={handleChange}
+            />
+            <button type="submit">Update</button>
+          </form>
+        )}
         {/* {props.room.name} */}
-        {/* {props.messageList?.map((message) => (
-        <li key={message.id}>
-          <p style={{ padding: "10px" }} value={message.id}>
-            {message.username}: {message.text}
-          </p>
-          <button type="button" value={message.id} onClick={handleEdit}>
-            Edit
-          </button>
-          <button type="click" value={message.id} onClick={deleteMessage}>
-            Delete
-          </button>
-        </li>
-      ))} */}
-        {props.messageList.map((message) => (
+        {props.messageList?.map((message) => (
+          <li key={message.id}>
+            <p style={{ padding: "10px" }} value={message.id}>
+              {message.username}: {message.text}
+            </p>
+            <button
+              type="button"
+              value={message.id}
+              onClick={() => setIsEditing(message.id)}
+            >
+              Edit
+            </button>
+            <button type="click" value={message.id} onClick={deleteMessage}>
+              Delete
+            </button>
+          </li>
+        ))}
+        {/* {props.messageList.map((message) => (
           <MessageItem
             key={message.id}
             {...message}
             deleteMessage={deleteMessage}
-            editMessage={editMessage}
+            // editMessage={editMessage}
           />
-        ))}
+        ))} */}
       </ul>
     </>
   );

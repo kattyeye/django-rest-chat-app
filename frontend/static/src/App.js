@@ -177,7 +177,11 @@ function App() {
               />
             </section>
             <section className="message-list-container">
-              <MessageList messageList={messageList} roomList={roomList} />
+              <MessageList
+                messageList={messageList}
+                roomList={roomList}
+                room={currentRoom.id}
+              />
 
               <MessageForm
                 currentRoom={currentRoom}

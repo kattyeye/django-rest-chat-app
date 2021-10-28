@@ -35,7 +35,11 @@ function MessageItem(props) {
       <button type="button" onClick={() => setIsEditing(true)}>
         Edit
       </button>
-      <button type="button" onClick={() => props.deleteMessage(props.id)}>
+      <button
+        type="click"
+        value={props.id}
+        onClick={() => props.deleteMessage(props.id)}
+      >
         Delete
       </button>
     </>
