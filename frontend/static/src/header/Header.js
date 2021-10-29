@@ -1,14 +1,16 @@
 import { NavLink } from "react-router-dom";
 import Cookies from "js-cookie";
+import logo from "../logo.png";
 export default function Header(props) {
   return (
-    <nav className="navbar navbar-expand-lg ">
+    <nav className="navbar navbar-expand-lg prim-nav-container">
       <div className="container">
         <div className="collapse navbar-collapse" id="navbarResponsive">
           <ul className="navbar-nav ml-auto">
             <li>
               <NavLink className="navbar-brand" to="/">
-                <img src="" />
+                {/* <img src={logo} /> */}
+                The Chat Room
               </NavLink>
             </li>
             <li className="nav-item secondary-nav-item p-3">

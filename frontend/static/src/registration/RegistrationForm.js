@@ -24,7 +24,7 @@ export default function RegistrationForm(props) {
   };
 
   return (
-    <form className="mt-3" onSubmit={handleSubmit}>
+    <form className="mt-3 container col-6" onSubmit={handleSubmit}>
       <div className="form-group text-left mb-3">
         <label htmlFor="username">Username</label>
         <input
@@ -78,7 +78,7 @@ export default function RegistrationForm(props) {
         />
         <span className="text-danger">{error}</span>
       </div>
-      <button type="submit" className="btn btn-primary mt-3">
+      <button type="submit" className=" mt-3">
         Register
       </button>
     </form>

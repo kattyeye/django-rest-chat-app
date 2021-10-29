@@ -21,7 +21,7 @@ export default function MessageList(props) {
     });
   }
 
-  async function editMessage(event) {
+  async function editMessage(event, id) {
     event.preventDefault();
     const updatedMessage = {
       text: editedMessage,
@@ -31,9 +31,12 @@ export default function MessageList(props) {
     // // const index = props.messageList.findIndex((message) => message.id === id);
     // const updatedMessages = [...props.messageList];
     // updatedMessages[event.target.value] = text;
-    // setEditedMessage(updatedMessages);
-    const updatedMessages = { ...props.messageList };
-    updatedMessages[event.target.value] = updatedMessage;
+    // // setEditedMessage(updatedMessages);
+    // const updated = props.messageList.map((message) => {
+    //   return message.id === id ? updated : message;
+    // });
+    // const updatedMessages = { ...props.messageList };
+    // updatedMessages[updated] = setEditedMessage(updatedMessages);
     const options = {
       method: "PUT",
       headers: {
@@ -48,8 +51,8 @@ export default function MessageList(props) {
       console.log(response);
     } else {
       const data = await response.json();
+      setEditedMessage({ ...props.message, data });
       setIsEditing(false);
-      setEditedMessage(updatedMessage.text);
     }
   }
   function handleChange(event) {
@@ -84,7 +87,12 @@ export default function MessageList(props) {
             >
               Edit
             </button>
-            <button type="click" value={message.id} onClick={deleteMessage}>
+            <button
+              type="click"
+              className="deletebutton"
+              value={message.id}
+              onClick={deleteMessage}
+            >
               Delete
             </button>
           </li>

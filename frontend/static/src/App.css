@@ -4,11 +4,32 @@
 body {
   margin: 0 auto;
 }
+img {
+  width: 100%;
+}
+.navbar-brand {
+  width: 20%;
+  color: white;
+}
+.navbar-brand:hover {
+  color: #212a40;
+}
+
+.prim-nav-container {
+  background-color: coral;
+  height: 60px;
+  display: flex;
+}
+.prim-nav-container ul {
+  display: flex;
+  align-items: center;
+}
 .nav-bar {
   background-color: #212a40;
-  height: 50px;
+  height: 30px;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 .nav-bar button {
   color: coral;
@@ -18,6 +39,18 @@ body {
 .nav-bar button:hover {
   background-color: coral;
   color: #212a40;
+}
+.nav-item a {
+  background-color: coral;
+  color: #212a40;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+
+.nav-item a:hover,
+.nav-item a:focus {
+  background-color: #212a40;
+  color: coral;
 }
 ul {
   padding: 0px;
@@ -82,15 +115,21 @@ div p {
   display: flex;
   justify-content: flex-end;
 }
-.send-button,
-.room-add-button {
+button {
   background-color: coral;
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
   margin-left: 5px;
 }
-.send-button:hover,
-.room-add-button:hover {
+button:hover {
   background-color: rgb(255, 162, 128);
+}
+.deletebutton {
+  background-color: #212a40;
+  color: coral;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-left: 5px;
 }

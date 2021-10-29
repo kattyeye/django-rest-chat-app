@@ -163,10 +163,10 @@ function App() {
         <Route path="/chat">
           <div className="app-container">
             <section className="room-list-container">
-              Rooms
               <RoomList
                 roomList={roomList}
                 fetchMessagesForThatRoom={fetchMessagesForThatRoom}
+                isAuth={isAuth}
               />
               <RoomForm
                 roomList={roomList}
@@ -176,12 +176,14 @@ function App() {
                 isAuth={isAuth}
               />
             </section>
+
             <section className="message-list-container">
               <MessageList
                 messageList={messageList}
                 roomList={roomList}
                 room={currentRoom.id}
                 currentRoom={currentRoom}
+                isAuth={isAuth}
               />
 
               <MessageForm
@@ -189,6 +191,7 @@ function App() {
                 messageList={messageList}
                 setMessageList={setMessageList}
                 roomList={roomList}
+                isAuth={isAuth}
               />
             </section>
           </div>
