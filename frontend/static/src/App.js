@@ -181,6 +181,7 @@ function App() {
                 messageList={messageList}
                 roomList={roomList}
                 room={currentRoom.id}
+                currentRoom={currentRoom}
               />
 
               <MessageForm

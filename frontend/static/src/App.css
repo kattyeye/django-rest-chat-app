@@ -74,7 +74,8 @@ div p {
   padding: 5px 15px;
   text-align: start;
 }
-.room-list-buttons:hover {
+.room-list-buttons:hover,
+.room-list-buttons:focus {
   color: coral;
 }
 .message-form-container {

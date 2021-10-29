@@ -27,7 +27,13 @@ export default function MessageList(props) {
       text: editedMessage,
       chat_room: props.room,
     };
-
+    // console.log("text", props.messageList[id].text);
+    // // const index = props.messageList.findIndex((message) => message.id === id);
+    // const updatedMessages = [...props.messageList];
+    // updatedMessages[event.target.value] = text;
+    // setEditedMessage(updatedMessages);
+    const updatedMessages = { ...props.messageList };
+    updatedMessages[event.target.value] = updatedMessage;
     const options = {
       method: "PUT",
       headers: {
@@ -43,7 +49,7 @@ export default function MessageList(props) {
     } else {
       const data = await response.json();
       setIsEditing(false);
-      //   props.setNewMessage(data);
+      setEditedMessage(updatedMessage.text);
     }
   }
   function handleChange(event) {
@@ -52,7 +58,7 @@ export default function MessageList(props) {
 
   return (
     <>
-      {/* <h3>{props.roomList.room}</h3> */}
+      <h3># {props.currentRoom.name}</h3>
       <ul>
         {isEditing && (
           <form onSubmit={editMessage}>
