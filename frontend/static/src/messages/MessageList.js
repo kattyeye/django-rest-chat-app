@@ -51,7 +51,8 @@ export default function MessageList(props) {
       console.log(response);
     } else {
       const data = await response.json();
-      setEditedMessage({ ...props.message, data });
+      setEditedMessage({ data });
+      //   console.log({ data: data.text });
       setIsEditing(false);
     }
   }
